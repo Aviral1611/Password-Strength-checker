@@ -26,19 +26,17 @@ A simple web application developed using Streamlit to evaluate the strength of p
    git clone https://github.com/Aviral1611/Password-Strength-checker.git
 Navigate to the project directory:
 
-bash
-Copy code
+
 cd Password-Strength-checker
 Install the required dependencies:
 
-bash
-Copy code
+
+
 pip install streamlit
 Usage
 Run the Streamlit app:
 
-bash
-Copy code
+
 streamlit run app.py
 Open your web browser and navigate to http://localhost:8501 to access the Password Strength Checker.
 
