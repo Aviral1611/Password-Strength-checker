@@ -1,5 +1,6 @@
 import streamlit as st
 import string
+import random
 
 def check_password_strength(password):
     lower_alpha_count = upper_alpha_count = number_count = whitespace_count = special_char_count = 0
@@ -52,31 +53,51 @@ def check_password_strength(password):
         "remarks": remarks
     }
 
+def generate_strong_password(length=12):
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(random.choice(characters) for i in range(length))
+    return password
+
 # Streamlit App
 
-st.title("Password Strength Checker")
+st.title("🔒 Password Strength Checker")
 
 # Input
-password = st.text_input("Enter your password", type="password")
+password = st.text_input("Enter your password", type="password", key="password_input")
 
-if st.button("Check Strength"):
-    if password:
-        # Call the check_password_strength function
-        result = check_password_strength(password)
+if password:
+    result = check_password_strength(password)
+    # Progress Bar
+    st.progress(result["strength"] * 0.2)
 
-        # Display the results
-        st.write("Your password has:")
-        st.write(f"- {result['lowercase']} lowercase letters")
-        st.write(f"- {result['uppercase']} uppercase letters")
-        st.write(f"- {result['digits']} digits")
-        st.write(f"- {result['whitespaces']} whitespaces")
-        st.write(f"- {result['special_chars']} special characters")
-        st.write(f"**Password score:** {result['strength']}/5")
-        st.write(f"**Remarks:** {result['remarks']}")
-    else:
-        st.warning("Please enter a password.")
+    # Emoji Feedback
+    emoji = "😢" if result["strength"] <= 2 else "😊" if result["strength"] <= 4 else "💪"
+    st.markdown(f"<h2 style='text-align: center;'>{emoji}</h2>", unsafe_allow_html=True)
 
+    # Real-time feedback
+    st.write("Your password has:")
+    st.write(f"- {result['lowercase']} lowercase letters")
+    st.write(f"- {result['uppercase']} uppercase letters")
+    st.write(f"- {result['digits']} digits")
+    st.write(f"- {result['whitespaces']} whitespaces")
+    st.write(f"- {result['special_chars']} special characters")
+    st.write(f"**Password score:** {result['strength']}/5")
+    st.write(f"**Remarks:** {result['remarks']}")
+else:
+    st.warning("Please enter a password.")
 
+st.markdown("---")
+st.markdown("**Password Tips**")
+st.markdown("- Use a mix of uppercase and lowercase letters")
+st.markdown("- Include numbers and special characters")
+st.markdown("- Avoid using common words or patterns")
+
+# Generate strong password
+if st.button("Generate Strong Password"):
+    strong_password = generate_strong_password()
+    st.success(f"Generated password: `{strong_password}`")
+
+# Footer
 st.markdown("---")
 st.markdown(
     """
