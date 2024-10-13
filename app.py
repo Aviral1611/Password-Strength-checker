@@ -92,6 +92,7 @@ st.markdown("- Use a mix of uppercase and lowercase letters")
 st.markdown("- Include numbers and special characters")
 st.markdown("- Avoid using common words or patterns")
 st.markdown("- Make sure you add atleast one personal thing for reference")
+st.markdown("- Do not include words from your email or username")
 
 # Generate strong password
 if st.button("Generate Strong Password"):
